@@ -17,7 +17,7 @@ def sqrt_iterative(n)
   x
 end
 
-def within(epsilon, seq)
+def limit(epsilon, seq)
   # NOTE: To maintain the same behavior as the Haskell code,
   #       peek at the second guess so it's not consumed.
   a = seq.next
@@ -25,11 +25,11 @@ def within(epsilon, seq)
   if (a - b).abs <= epsilon
     b
   else
-    within(epsilon, seq)
+    limit(epsilon, seq)
   end
 end
 
-def repeat(f, a)
+def iterate(a, &f)
   Enumerator.new do |yielder|
     loop do
       yielder << a
@@ -38,17 +38,6 @@ def repeat(f, a)
   end.lazy
 end
 
-def next_guess(n, a)
-  (a + n/a.to_f)/2.0
-end
-
 def sqrt(n)
-  within(0.0001, repeat(method(:next_guess).curry[n], 1.0))
-end
-
-# This is another way to define the method
-# It doesn't use currying because `n` is captured by the lambda.
-# However, you can't use the lambda outside this method.
-def sqrt_lambda_next(n)
-  within(0.0001, repeat(lambda { |a| (a + n/a.to_f)/2.0 }, 1.0))
+  limit(0.0001, iterate(1.0) { |a| (a + n/a.to_f)/2.0 })
 end
