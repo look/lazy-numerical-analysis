@@ -2,6 +2,28 @@
 
 This takes Haskell code by [John Hughes](https://en.wikipedia.org/wiki/John_Hughes_(computer_scientist)) and translates it to Ruby to play around with using infinite sequences in an eagerly evaluated language.
 
+## Running the code
+
+For Ruby, you need Ruby 2.0 or greater:
+
+```
+$ irb
+require_relative 'numerical_analysis'
+sqrt 1000
+# => 31.622776601684336
+```
+
+I used Stack to install Haskell. Then you can run:
+
+```
+$ stack ghci
+:load numerical_analysis.hs
+*Main> sqrt 1000
+31.622776601684336
+*Main> deriv (**2) 5
+10.00006103515625
+```
+
 ## Futher reading
 
 * [Why Functional Programming Matters](https://www.csee.umbc.edu/courses/331/fall10/resources/papers/whyfp.pdf)
